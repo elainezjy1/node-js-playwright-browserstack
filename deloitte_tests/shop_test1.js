@@ -1,5 +1,6 @@
 const { expect } = require('@playwright/test');
 const test = require('./support/myfixture');
+const envConfig = require('./utils/envconfig');
 
 
 test.describe('A group of tests', { tag: '@regression', }, () => {
@@ -47,8 +48,9 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
 
     test('Test scenario 2', async ({ page, cartPage, storePage }) => {
 
-        let product1 = "Buffalo - Striploin";
-        let product2 = "Bacardi Breezer - Tropical";
+        let product1 = envConfig.testdata.product1.name;  // "Buffalo - Striploin"
+        let product2 = envConfig.testdata.product2.name; //"Bacardi Breezer - Tropical"
+
         //Go to Store page
         await storePage.goto();
         //Add 2 items to the cart
@@ -62,7 +64,7 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
         await cartPage.update_quantity(product1, 3);
         //Check value of Total Items, Total Payment
         await expect(await cartPage.get_total_items()).toEqual("4");
-        await expect(await cartPage.get_total_payment()).toEqual("$375.25");
+        await expect(await cartPage.get_total_payment()).toEqual( "$"+(envConfig.testdata.product1.price * 3 + envConfig.testdata.product2.price * 1 ).toString());
 
         //Check that Reduce button displays for the first item
         await expect(cartPage.reduce_button_exists(product1)).toBeTruthy();
@@ -72,7 +74,7 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
         await cartPage.update_quantity(product1, 2);
         //Check value of Total Items, Total Payment
         await expect(await cartPage.get_total_items()).toEqual("3");
-        await expect(await cartPage.get_total_payment()).toEqual("$336.14");
+        await expect(await cartPage.get_total_payment()).toEqual("$"+(envConfig.testdata.product1.price * 2 + envConfig.testdata.product2.price * 1 ).toString());
 
         //Delete the second item
         await cartPage.delete_product(product2);
@@ -89,5 +91,5 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
 
     test.skip('Test scenario 3', async ({ page }) => {
         // This is a dummy test scenario to be skipped
-      });
+    });
 })
