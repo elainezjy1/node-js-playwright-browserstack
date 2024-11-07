@@ -1,8 +1,29 @@
 const { expect } = require('@playwright/test');
-const test = require('./support/hooks');
+const test = require('./support/myfixture');
 
 
 test.describe('A group of tests', { tag: '@regression', }, () => {
+
+    test.beforeAll('Set up', async () => {
+        console.log('Custom hooks: Before tests');
+    });
+
+    test.beforeEach(async ({ page }) => {
+        console.log(`Custom hooks: Running ${test.info().title}`);
+    });
+
+
+    test.afterEach(async ({ page }) => {
+        console.log(`Finished ${test.info().title} with status ${test.info().status}`);
+        if (test.info().status !== test.info().expectedStatus) {
+            await page.screenshot({ path: `./screenshots/${test.info().title}.png`, fullPage: true })
+        }
+    })
+
+    test.afterAll('Teardown', async () => {
+        console.log('Custom hooks: After tests');
+    });
+
     test('Test scenario 1', { tag: '@smoke', }, async ({ page, cartPage, storePage }) => {
         //Open the Store page
         await storePage.goto();
@@ -65,4 +86,8 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
         await expect(page.getByText("Your cart is empty")).toBeVisible();
 
     });
+
+    test.skip('Test scenario 3', async ({ page }) => {
+        // This is a dummy test scenario to be skipped
+      });
 })
