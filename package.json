@@ -5,14 +5,20 @@
   "main": "index.js",
   "scripts": {
     "sample-test": "npx browserstack-node-sdk playwright test --config=./playwright.config.js",
-    "deloitte-test": "npx browserstack-node-sdk playwright test --config=./playwright.local.config.js",
+    "deloitte-test-smoke": "npx browserstack-node-sdk playwright test --grep @smoke --config=./playwright.local.config.js",
+    "deloitte-test-regression": "npx browserstack-node-sdk playwright test --grep @regression --config=./playwright.local.config.js",
     "postinstall": "npm update browserstack-node-sdk"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "latest",
+    "@playwright/test": "^1.48.2",
     "browserstack-node-sdk": "latest"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^11.0.1",
+    "cucumber-html-reporter": "^7.2.0",
+    "lodash": "^4.17.21"
   }
 }
