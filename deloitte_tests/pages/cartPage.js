@@ -47,9 +47,9 @@ class CartPage {
     }
 
     async delete_product(product) {
-        let current_quantity = await this.get_product_quantity(product);
+        const current_quantity = await this.get_product_quantity(product);
         if (current_quantity != 1) {
-            await update_quantity(product, 1)
+            await update_quantity(product, 1);
         }
         await this.get_product_row(product).locator("button.btn-danger").click();
     }
@@ -57,7 +57,7 @@ class CartPage {
     reduce_button_exists(product) {
         const reduce_button = this.get_product_row(product)
             .locator("button.btn-danger")
-            .getByRole("path", { d: /M10/i })
+            .getByRole("path", { d: /M10/i });
         return reduce_button ? true : false;
 
     }
@@ -65,7 +65,7 @@ class CartPage {
     remove_button_exists(product) {
         const reduce_button = this.get_product_row(product)
             .locator("button.btn-danger")
-            .getByRole("path", { d: /M9/i })
+            .getByRole("path", { d: /M9/i });
         return reduce_button ? true : false;
 
     }

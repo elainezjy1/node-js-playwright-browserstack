@@ -1,0 +1,13 @@
+{
+    "env": "staging",
+    "testdata": {
+        "product1": {
+            "name": "Buffalo - Striploin",
+            "price": 39.11
+        },
+        "product2": {
+            "name": "Bacardi Breezer - Tropical",
+            "price": 257.92
+        }
+    }
+}

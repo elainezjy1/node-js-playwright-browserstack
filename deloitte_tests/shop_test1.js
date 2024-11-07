@@ -17,9 +17,9 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
     test.afterEach(async ({ page }) => {
         console.log(`Finished ${test.info().title} with status ${test.info().status}`);
         if (test.info().status !== test.info().expectedStatus) {
-            await page.screenshot({ path: `./screenshots/${test.info().title}.png`, fullPage: true })
+            await page.screenshot({ path: `./screenshots/${test.info().title}.png`, fullPage: true });
         }
-    })
+    });
 
     test.afterAll('Teardown', async () => {
         console.log('Custom hooks: After tests');
@@ -48,8 +48,8 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
 
     test('Test scenario 2', async ({ page, cartPage, storePage }) => {
 
-        let product1 = envConfig.testdata.product1.name;  // "Buffalo - Striploin"
-        let product2 = envConfig.testdata.product2.name; //"Bacardi Breezer - Tropical"
+        const product1 = envConfig.testdata.product1.name;  // "Buffalo - Striploin"
+        const product2 = envConfig.testdata.product2.name; //"Bacardi Breezer - Tropical"
 
         //Go to Store page
         await storePage.goto();
@@ -64,7 +64,7 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
         await cartPage.update_quantity(product1, 3);
         //Check value of Total Items, Total Payment
         await expect(await cartPage.get_total_items()).toEqual("4");
-        await expect(await cartPage.get_total_payment()).toEqual( "$"+(envConfig.testdata.product1.price * 3 + envConfig.testdata.product2.price * 1 ).toString());
+        await expect(await cartPage.get_total_payment()).toEqual("$" + (envConfig.testdata.product1.price * 3 + envConfig.testdata.product2.price * 1).toString());
 
         //Check that Reduce button displays for the first item
         await expect(cartPage.reduce_button_exists(product1)).toBeTruthy();
@@ -74,7 +74,7 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
         await cartPage.update_quantity(product1, 2);
         //Check value of Total Items, Total Payment
         await expect(await cartPage.get_total_items()).toEqual("3");
-        await expect(await cartPage.get_total_payment()).toEqual("$"+(envConfig.testdata.product1.price * 2 + envConfig.testdata.product2.price * 1 ).toString());
+        await expect(await cartPage.get_total_payment()).toEqual("$" + (envConfig.testdata.product1.price * 2 + envConfig.testdata.product2.price * 1).toString());
 
         //Delete the second item
         await cartPage.delete_product(product2);
@@ -92,4 +92,4 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
     test.skip('Test scenario 3', async ({ page }) => {
         // This is a dummy test scenario to be skipped
     });
-})
+});

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "syntax-check": "eslint ./",
     "sample-test": "npx browserstack-node-sdk playwright test --config=./playwright.config.js",
     "deloitte-test-smoke": "npx browserstack-node-sdk playwright test --grep @smoke --config=./playwright.local.config.js",
     "deloitte-test-regression": "npx browserstack-node-sdk playwright test --grep @regression --config=./playwright.local.config.js",
@@ -14,7 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.48.2",
-    "browserstack-node-sdk": "latest"
+    "browserstack-node-sdk": "latest",
+    "eslint": "^9.14.0"
   },
   "dependencies": {
     "@cucumber/cucumber": "^11.0.1",
