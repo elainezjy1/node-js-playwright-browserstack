@@ -3,5 +3,6 @@
     "testdata": {
         "product1": "test product1",
         "product2":"test product2"
-    }
+    },
+    "logLevel": "info"
 }

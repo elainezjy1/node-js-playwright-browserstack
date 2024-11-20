@@ -1,28 +1,31 @@
 const { expect } = require('@playwright/test');
 const test = require('./support/myfixture');
 const envConfig = require('./utils/envconfig');
-
+const logger = require('./utils/logger');
+logger.level = envConfig.logLevel.toUpperCase();
+logger.info('<<< Log level set to', logger.level.levelStr, '>>>');
+console.log('Log level set to', logger.level);
 
 test.describe('A group of tests', { tag: '@regression', }, () => {
 
     test.beforeAll('Set up', async () => {
-        console.log('Custom hooks: Before tests');
+        logger.info('Custom hooks: Before tests');
     });
 
     test.beforeEach(async ({ page }) => {
-        console.log(`Custom hooks: Running ${test.info().title}`);
+        logger.info(`Custom hooks: Running ${test.info().title}`);
     });
 
 
     test.afterEach(async ({ page }) => {
-        console.log(`Finished ${test.info().title} with status ${test.info().status}`);
+        logger.info(`Finished ${test.info().title} with status ${test.info().status}`);
         if (test.info().status !== test.info().expectedStatus) {
             await page.screenshot({ path: `./screenshots/${test.info().title}.png`, fullPage: true });
         }
     });
 
     test.afterAll('Teardown', async () => {
-        console.log('Custom hooks: After tests');
+        logger.info('Custom hooks: After tests');
     });
 
     test('Test scenario 1', { tag: '@smoke', }, async ({ page, cartPage, storePage }) => {
