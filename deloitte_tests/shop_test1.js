@@ -8,6 +8,11 @@ console.log('Log level set to', logger.level);
 
 test.describe('A group of tests', { tag: '@regression', }, () => {
 
+    test.beforeEach('Custom tag handling', async () => {
+        logger.debug(`Running test with tags: ${test.info().tags}`);
+        test.info().skip(test.info().tags.includes('@customSkip'), 'Skipping test case due to @customSkip');
+    });
+
     test.beforeAll('Set up', async () => {
         logger.info('Custom hooks: Before tests');
     });
@@ -93,6 +98,10 @@ test.describe('A group of tests', { tag: '@regression', }, () => {
     });
 
     test.skip('Test scenario 3', async ({ page }) => {
+        // This is a dummy test scenario to be skipped
+    });
+
+    test('Test scenario 4', { tag: ['@smoke', '@customSkip'], }, async ({ }) => {
         // This is a dummy test scenario to be skipped
     });
 });
